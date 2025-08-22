@@ -1,0 +1,45 @@
+(define-module (clocktower packages neovim)
+  #:use-module (guix packages)
+  #:use-module (guix utils)
+  #:use-module (guix git-download)
+  #:use-module (guix download)
+  #:use-module (guix build-system gnu)
+  #:use-module (gnu packages vim)
+  #:use-module (gnu packages curl)
+  #:use-module (gnu packages tree-sitter)
+  #:use-module (gnu packages julia)
+  #:use-module (gnu packages textutils)
+  #:use-module (guix licenses))
+
+
+(define-public tree-sitter-0.25
+  (package
+    (inherit tree-sitter)
+    (name "tree-sitter")
+    (version "0.25.3")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/tree-sitter/tree-sitter")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "0cck2wa17figxww7lb508sgwy9sbyqj89vxci07hiscr5sgdx9y5"))))))
+
+(define-public neovim-0.11
+  (package
+    (inherit neovim)
+    (name "neovim")
+    (version "0.11.3")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/neovim/neovim")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "07kg1wkv0dhxj8a1xfzj2dnwsp232vd16n1j6jyxs0vvcqqbg5jj"))))
+    (inputs (modify-inputs (package-inputs neovim)
+              (replace "tree-sitter" tree-sitter-0.25)))))
