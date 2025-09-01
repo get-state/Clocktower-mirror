@@ -9,14 +9,14 @@
 (define-public github-cli
   (package
     (name "github-cli")
-    (version "2.76.1")
+    (version "2.78.0")
     (source
      (origin
        (method url-fetch/tarbomb)
        (uri (string-append "https://github.com/cli/cli/releases/download/v" version
                            "/gh_" version "_linux_amd64.tar.gz"))
        (sha256
-        (base32 "1s9nc2q0p0fhafz9nc5gnqc2hk1sqlc6mflgwfd8hqj4ifipqdhq"))))
+        (base32 "018sgs8f7i7va4bx22fcjn2mvjk5rf1cwf315v425cfnqmq9yc5c"))))
     (build-system copy-build-system)
     (arguments
      (list
