@@ -16,7 +16,7 @@
 (define-public scrcpy
   (package
     (name "scrcpy")
-    (version "3.3.1")
+    (version "3.3.2")
     (source
      (origin
        (method git-fetch)
@@ -25,7 +25,7 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "10w0whpay80cw2lhbv2h2l75id24zcc9g9hll5lva51dp4nnd2ss"))))
+        (base32 "1s5r51a4r32ycnqiarrms9ck9j6s8ivh3qpr85h8ff15aqk2q0dg"))))
     (build-system meson-build-system)
     (arguments
      '(#:phases (modify-phases %standard-phases
@@ -35,6 +35,7 @@
                         (lambda (port)
                           ;; truncate the file
                           (display "" port)))))
+                  ;; TODO: unfortunately, adb version is too old to support TCP/IP
                   (add-after 'install 'wrap-adb
                     (lambda* (#:key inputs outputs #:allow-other-keys)
                       (let ((adb-bin (string-append (assoc-ref inputs "adb")
@@ -66,7 +67,7 @@ running a server on the Android device and communicating with it over adb.")
 (define scrcpy-server
   (package
     (name "scrcpy-server")
-    (version "3.3.1")
+    (version "3.3.2")
     (source
      (origin
        (method url-fetch)
@@ -74,10 +75,10 @@ running a server on the Android device and communicating with it over adb.")
              "https://github.com/Genymobile/scrcpy/releases/download/v"
              version "/scrcpy-server-v" version))
        (sha256
-        (base32 "1f6bxg0hpms4ngd3nyk4n2xnmawddk6ihhf9b3vgp629m8h0pxx0"))))
+        (base32 "1nfz57yi84qn3h5kgjsrhc53sa65fns6p1bmgidhyi7gcc4cmr9f"))))
     (build-system copy-build-system)
-    (arguments
-     '(#:install-plan '(("scrcpy-server-v3.3.1" "share/scrcpy/scrcpy-server"))))
+   (arguments
+     `(#:install-plan '((,(string-append "scrcpy-server-v" version) "share/scrcpy/scrcpy-server")))) 
     (synopsis "Server component for scrcpy Android screen mirroring")
     (description
      "This package contains the Android server APK file required by
