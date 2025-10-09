@@ -16,7 +16,7 @@
   (package
     (inherit tree-sitter)
     (name "tree-sitter")
-    (version "0.25.8")
+    (version "0.25.10")
     (source
      (origin
        (method git-fetch)
@@ -25,7 +25,7 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "19vg49n3wj75s28gjp2mlbb0w36bsbx3571fcw77l572qh6bk3mb"))))))
+        (base32 "1wv6nlxishxh6d2nzf2hrmpx41nzii4y219f06qa0bn2y9p36yv8"))))))
 
 (define-public neovim-0.11
   (package
