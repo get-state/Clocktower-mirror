@@ -2,7 +2,6 @@
   #:use-module (gnu packages video)
   #:use-module (gnu packages libusb)
   #:use-module (clocktower packages adb)
-  ; #:use-module (gnu packages android)
   #:use-module (gnu packages sdl)
   #:use-module (gnu packages pkg-config)
   #:use-module (guix packages)
@@ -55,7 +54,7 @@
                             (out (assoc-ref outputs "out")))
                         (install-file scrcpy-server-bin
                                       (string-append out "/share/scrcpy/"))))))))
-    (inputs (list ffmpeg sdl2 adb-latest libusb scrcpy-server))
+    (inputs (list ffmpeg sdl2 adb libusb scrcpy-server))
     (native-inputs (list pkg-config))
     (synopsis "Display and control Android devices over USB or TCP/IP")
     (description
