@@ -4,8 +4,10 @@
   #:use-module (guix git-download)
   #:use-module (guix build-system cmake)
   #:use-module (guix licenses)
+  #:use-module (guix gexp)
   #:use-module (gnu packages)
   #:use-module (gnu packages audio)
+  #:use-module (gnu packages vulkan)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages gl)
   #:use-module (gnu packages pkg-config)
@@ -14,7 +16,6 @@
   #:use-module (gnu packages video)
   #:use-module (gnu packages xorg))
 
-; TODO: add vulkan support
 (define-public ppsspp
   (package
     (name "ppsspp")
@@ -32,27 +33,35 @@
          "0m64sfv4pc24w78v75i8m0bihs3p86p3zl65hmr5666q8n6hhnpg"))))
     (build-system cmake-build-system)
     (arguments
-     `(#:tests? #f ; No test suite
-       #:configure-flags
-       (list "-DUSING_QT_UI=OFF"
-             ; "-DUSE_SYSTEM_FFMPEG=ON"
-             "-DUSE_SYSTEM_SNAPPY=ON"
-             "-DUSE_SYSTEM_LIBZIP=ON"
-             "-DUSE_WAYLAND_WSI=ON"
-             (string-append "-DCMAKE_INSTALL_PREFIX=" %output))
-       #:phases
-       (modify-phases %standard-phases
-         (add-after 'unpack 'fix-paths
-           (lambda* (#:key outputs #:allow-other-keys)
-             (substitute* "SDL/SDLMain.cpp"
-               (("/usr/share") (string-append (assoc-ref outputs "out") "/share")))
-             #t)))))
+     (list
+      #:tests? #f ; No test suite
+      #:configure-flags
+      #~(list "-DUSING_QT_UI=OFF"
+              ; "-DUSE_SYSTEM_FFMPEG=ON"
+              "-DUSE_SYSTEM_SNAPPY=ON"
+              "-DUSE_SYSTEM_LIBZIP=ON"
+              "-DUSE_WAYLAND_WSI=ON"
+              "-DVULKAN=ON"
+              (string-append "-DCMAKE_INSTALL_PREFIX=" #$output))
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'unpack 'fix-paths
+            (lambda _
+              (substitute* "SDL/SDLMain.cpp"
+                (("/usr/share") (string-append #$output "/share")))))
+          (add-after 'install 'wrap-program
+            (lambda _
+              (wrap-program (string-append #$output "/bin/PPSSPPSDL")
+                `("LD_LIBRARY_PATH" ":" prefix
+                  (,(string-append #$(this-package-input "vulkan-loader") "/lib")))))))))
     (native-inputs
      (list pkg-config python))
     (inputs
      (list glew 
            ; ffmpeg-6 currently broken TODO: fix this, and uncomment above.
            libzip
+           vulkan-headers
+           vulkan-loader
            mesa
            sdl2
            snappy
