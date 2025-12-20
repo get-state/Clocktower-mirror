@@ -3,7 +3,7 @@
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix build-system cmake)
-  #:use-module (guix licenses)
+  #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix gexp)
   #:use-module (gnu packages)
   #:use-module (gnu packages audio)
@@ -74,4 +74,4 @@ of PSP games in full HD resolution.  It can even upscale textures that would
 otherwise be too blurry as they were made for the small screen of the original
 PSP.  The emulator supports save states, external controllers, and has a
 built-in screen recording feature.")
-    (license gpl2+)))
+    (license license:gpl2+)))
