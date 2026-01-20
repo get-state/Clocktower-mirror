@@ -16,7 +16,7 @@
 (define-public scrcpy
   (package
     (name "scrcpy")
-    (version "3.3.3")
+    (version "3.3.4")
     (source
      (origin
        (method git-fetch)
@@ -25,7 +25,7 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1520my5d1385s91kra89bk92ksgn6343lk4zjq5gkngmpylq0h6n"))))
+        (base32 "1gn75sqqv0r0zh67rqfqmg5il7ac3lkd2wyy0ji9y7s9fmh7h9z7"))))
     (build-system meson-build-system)
     (arguments
      '(#:phases (modify-phases %standard-phases
@@ -67,7 +67,7 @@ running a server on the Android device and communicating with it over adb.")
 (define scrcpy-server
   (package
     (name "scrcpy-server")
-    (version "3.3.3")
+    (version "3.3.4")
     (source
      (origin
        (method url-fetch)
@@ -75,7 +75,7 @@ running a server on the Android device and communicating with it over adb.")
              "https://github.com/Genymobile/scrcpy/releases/download/v"
              version "/scrcpy-server-v" version))
        (sha256
-        (base32 "1q2b6pakyqdywzi92v9c5c8fifpg9yn9gkmcsjfn8ngjlwxk4w3y"))))
+        (base32 "17h70cimwdhfpkhzdl5mp7zxjhamdmzfrdh655aal02ska627245"))))
     (build-system copy-build-system)
    (arguments
      `(#:install-plan '((,(string-append "scrcpy-server-v" version) "share/scrcpy/scrcpy-server")))) 
