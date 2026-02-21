@@ -17,7 +17,7 @@
 (define-public nu
   (package
     (name "nushell")
-    (version "0.108.0")
+    (version "0.110.0")
     (source
      (origin
        (method git-fetch)
@@ -26,10 +26,10 @@
              (commit version)))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "15mmfrxcpzg6mhin15xzmb7m7xi6ncsa23i87645yv8fqfqi7qzh"))))
+        (base32 "1ycz8rm0gh21h1v9956ka06pv22z0cn0bzq8pf3hv4plkqjm6awb"))))
     (build-system cargo-build-system)
     (arguments
-     `(#:rust ,rust-1.88
+     `(#:rust ,rust-1.93
        #:cargo-test-flags
        '("--"
          "--skip=path::canonicalize::canonicalize_tilde"
