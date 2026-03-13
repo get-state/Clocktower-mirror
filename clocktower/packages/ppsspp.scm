@@ -19,7 +19,7 @@
 (define-public ppsspp
   (package
     (name "ppsspp")
-    (version "1.19.3")
+    (version "1.20.2")
     (source
      (origin
        (method git-fetch)
@@ -30,7 +30,7 @@
        (file-name (git-file-name name version))
        (sha256
         (base32
-         "0m64sfv4pc24w78v75i8m0bihs3p86p3zl65hmr5666q8n6hhnpg"))))
+         "1qc349nky0yl3d710znx03rfngl00z8nhrc77zllizzffhz883d1"))))
     (build-system cmake-build-system)
     (arguments
      (list
