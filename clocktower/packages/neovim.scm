@@ -14,11 +14,11 @@
   #:use-module (gnu packages textutils)
   #:use-module (guix licenses))
 
-(define-public neovim-0.11
+(define-public neovim-0.12
   (package
     (inherit neovim)
     (name "neovim")
-    (version "0.11.6")
+    (version "0.12.0")
     (source
      (origin
        (method git-fetch)
@@ -27,7 +27,7 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1iw4mbqbswi4mb9lrz6yxnzk3iy20ilvv2z2l12v9izkqwvckl9m"))))
+        (base32 "173yaf58iqijvzg5yir94v2g67mi7k91d39mn85xsbvnapzxh9ql"))))
     (arguments
      (substitute-keyword-arguments (package-arguments neovim)
        ((#:phases phases)
