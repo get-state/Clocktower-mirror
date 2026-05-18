@@ -3,6 +3,7 @@
   #:use-module (gnu packages libusb)
   #:use-module (clocktower packages adb)
   #:use-module (gnu packages sdl)
+  #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages pkg-config)
   #:use-module (guix packages)
   #:use-module (guix download)
@@ -16,7 +17,7 @@
 (define-public scrcpy
   (package
     (name "scrcpy")
-    (version "3.3.4")
+    (version "4.0")
     (source
      (origin
        (method git-fetch)
@@ -25,7 +26,7 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1gn75sqqv0r0zh67rqfqmg5il7ac3lkd2wyy0ji9y7s9fmh7h9z7"))))
+        (base32 "0kbj8zazsc260n95qa6vivhmgylfplq0cdmrac5bzf8dbifxkj53"))))
     (build-system meson-build-system)
     (arguments
      '(#:phases (modify-phases %standard-phases
@@ -54,7 +55,7 @@
                             (out (assoc-ref outputs "out")))
                         (install-file scrcpy-server-bin
                                       (string-append out "/share/scrcpy/"))))))))
-    (inputs (list ffmpeg sdl2 adb libusb scrcpy-server))
+    (inputs (list ffmpeg sdl3 adb libusb libdecor scrcpy-server))
     (native-inputs (list pkg-config))
     (synopsis "Display and control Android devices over USB or TCP/IP")
     (description
@@ -67,7 +68,7 @@ running a server on the Android device and communicating with it over adb.")
 (define scrcpy-server
   (package
     (name "scrcpy-server")
-    (version "3.3.4")
+    (version "4.0")
     (source
      (origin
        (method url-fetch)
@@ -75,7 +76,7 @@ running a server on the Android device and communicating with it over adb.")
              "https://github.com/Genymobile/scrcpy/releases/download/v"
              version "/scrcpy-server-v" version))
        (sha256
-        (base32 "17h70cimwdhfpkhzdl5mp7zxjhamdmzfrdh655aal02ska627245"))))
+        (base32 "0fhg47rsyx4c998h5zzmj5zrfn40jqgm5ivjr24n1sx1ckalp4l4"))))
     (build-system copy-build-system)
    (arguments
      `(#:install-plan '((,(string-append "scrcpy-server-v" version) "share/scrcpy/scrcpy-server")))) 
